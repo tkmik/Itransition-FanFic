@@ -1,4 +1,5 @@
 ﻿using DataAccess.EF;
+using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace WebAPI.Controllers
     [ApiController]
     public class FanFicController : Controller
     {
-        private readonly AppDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FanFicController(AppDbContext context)
+        public FanFicController(IUnitOfWork unit)
         {
-            _dbContext = context;
+            _unitOfWork = unit;
         }
         [HttpGet]
         public IActionResult GetFanFic()
         {
-            return new JsonResult(_dbContext.FanFic.ToList());
+            return new JsonResult(_unitOfWork.FanFic.GetAll());
         }
     }
 }

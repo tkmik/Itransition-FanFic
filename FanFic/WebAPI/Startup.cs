@@ -1,5 +1,6 @@
 using Autofac;
 using DataAccess.EF;
+using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,7 @@ namespace WebAPI
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
