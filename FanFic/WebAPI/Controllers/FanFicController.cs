@@ -1,4 +1,5 @@
 ﻿using DataAccess.EF;
+using DataAccess.Entities;
 using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,9 +20,9 @@ namespace WebAPI.Controllers
             _unitOfWork = unit;
         }
         [HttpGet]
-        public IActionResult GetFanFic()
+        public IEnumerable<FanFic> GetFanFic()
         {
-            return new JsonResult(_unitOfWork.FanFic.GetAll());
+            return _unitOfWork.FanFic.GetAll();
         }
     }
 }

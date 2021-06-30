@@ -12,100 +12,25 @@ namespace DataAccess.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
+
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
         }
 
-        private IGenericRepository<Capability> _capabilityRepository;
-        private IGenericRepository<Comment> _commentRepository;
-        private IGenericRepository<FanFic> _fanFicRepository;
-        private IGenericRepository<Like> _likeRepository;
-        private IGenericRepository<Topic> _topicRepository;
-        private IGenericRepository<User> _userRepository;
-        private IGenericRepository<UserCapability> _userCapabilityRepository;
-        public IGenericRepository<Capability> Capability 
-        {
-            get
-            {
-                if (_capabilityRepository is null)
-                {
-                    _capabilityRepository = new CapabilityRepository(_context);
-                }
-                return _capabilityRepository;
-            }
-        }
+        public IGenericRepository<Capability> Capability => new CapabilityRepository(_context);
 
-        public IGenericRepository<Comment> Comment
-        {
-            get
-            {
-                if (_commentRepository is null)
-                {
-                    _commentRepository = new CommentRepository(_context);
-                }
-                return _commentRepository;
-            }
-        }
+        public IGenericRepository<Comment> Comment => new CommentRepository(_context);
 
-        public IGenericRepository<FanFic> FanFic
-        {
-            get
-            {
-                if (_fanFicRepository is null)
-                {
-                    _fanFicRepository = new FanFicRepository(_context);
-                }
-                return _fanFicRepository;
-            }
-        }
+        public IGenericRepository<FanFic> FanFic => new FanFicRepository(_context);
 
-        public IGenericRepository<Like> Like
-        {
-            get
-            {
-                if (_likeRepository is null)
-                {
-                    _likeRepository = new LikeRepository(_context);
-                }
-                return _likeRepository;
-            }
-        }
+        public IGenericRepository<Like> Like => new LikeRepository(_context);
 
-        public IGenericRepository<Topic> Topic
-        {
-            get
-            {
-                if (_topicRepository is null)
-                {
-                    _topicRepository = new TopicRepository(_context);
-                }
-                return _topicRepository;
-            }
-        }
-        public IGenericRepository<User> User
-        {
-            get
-            {
-                if (_userRepository is null)
-                {
-                    _userRepository = new UserRepository(_context);
-                }
-                return _userRepository;
-            }
-        }
+        public IGenericRepository<Topic> Topic => new TopicRepository(_context);
 
-        public IGenericRepository<UserCapability> UserCapability
-        {
-            get
-            {
-                if (_userCapabilityRepository is null)
-                {
-                    _userCapabilityRepository = new UserCapabilityRepository(_context);
-                }
-                return _userCapabilityRepository;
-            }
-        }
+        public IGenericRepository<User> User => new UserRepository(_context);
+
+        public IGenericRepository<UserCapability> UserCapability => new UserCapabilityRepository(_context);
 
         public void Save()
         {

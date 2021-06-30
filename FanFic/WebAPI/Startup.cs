@@ -47,7 +47,7 @@ namespace WebAPI
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
