@@ -1,20 +1,17 @@
 using Autofac;
+using BusinessLogic.Infrastructure;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess.EF;
 using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI
 {
@@ -30,14 +27,15 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                    {
-                        string connectionString = Configuration.GetConnectionString("SQLServer");
-                        options.UseSqlServer(connectionString);
-                    })
+            {
+                string connectionString = Configuration.GetConnectionString("SQLServer");
+                options.UseSqlServer(connectionString);
+            })
                     .AddSwaggerGen(options =>
                     {
                         options.SwaggerDoc("v1", new OpenApiInfo { Title = "FanFic", Version = "v1" });
                     })
+                    .AddAutoMapper(map => map.AddProfile<MappingProfile>(), typeof(Startup))
                     .AddControllers()
                     .AddNewtonsoftJson(options =>
                     {
@@ -48,6 +46,7 @@ namespace WebAPI
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
+            builder.RegisterType<FanFicService>().As<IFanFicService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,7 +55,7 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(options => 
+                app.UseSwaggerUI(options =>
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "FanFic");
                 });

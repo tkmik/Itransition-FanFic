@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.Entities
+namespace WebAPI.ViewModels
 {
-    public class User
+    public class UserViewModel
     {
         public int Id { get; set; }
         public string Email { get; set; }
@@ -13,9 +13,9 @@ namespace DataAccess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Like> Favorites { get; set; }
-        public ICollection<UserCapability> Capabilities { get; set; }
+        public ICollection<CommentViewModel> Comments { get; set; }
+        public ICollection<LikeViewModel> Favorites { get; set; }
+        public ICollection<UserCapabilityViewModel> Capabilities { get; set; }
 
     }
 }

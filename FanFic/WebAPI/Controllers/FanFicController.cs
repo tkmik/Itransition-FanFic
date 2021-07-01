@@ -1,28 +1,28 @@
-﻿using DataAccess.EF;
-using DataAccess.Entities;
-using DataAccess.UnitOfWork;
+﻿using AutoMapper;
+using BusinessLogic.DTO;
+using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("fanfics")]
     [ApiController]
     public class FanFicController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly IFanFicService _fanFicService;
 
-        public FanFicController(IUnitOfWork unit)
+        public FanFicController(IMapper map, IFanFicService service)
         {
-            _unitOfWork = unit;
+            _mapper = map;
+            _fanFicService = service;
         }
         [HttpGet]
-        public IEnumerable<FanFic> GetFanFic()
+        public IEnumerable<FanFicViewModel> GetFanFic()
         {
-            return _unitOfWork.FanFic.GetAll();
+            return _mapper.Map<IEnumerable<FanFicDTO>, IEnumerable<FanFicViewModel>>(_fanFicService.GetFanFics());
         }
     }
 }
