@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    class UserCapabilityRepository : GenericRepository<UserCapability>, IUserCapability
+    class UserCapabilityRepository : GenericRepository<UserCapability>, IUserCapabilityRepository
     {
         public UserCapabilityRepository(AppDbContext context) : base(context)
         {   }

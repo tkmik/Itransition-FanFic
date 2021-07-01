@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.Interfaces
 {
-    public interface IUserCapability : IGenericRepository<UserCapability>
+    public interface IUserCapabilityRepository : IGenericRepository<UserCapability>
     {
     }
 }

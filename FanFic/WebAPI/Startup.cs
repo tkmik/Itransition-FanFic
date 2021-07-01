@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace WebAPI
 {
@@ -47,6 +48,10 @@ namespace WebAPI
         {
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
             builder.RegisterType<FanFicService>().As<IFanFicService>();
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces();
+           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

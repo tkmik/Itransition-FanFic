@@ -13,11 +13,9 @@ namespace BusinessLogic.Services
 {
     public class FanFicService : Service, IFanFicService
     {
-
-        public FanFicService(AppDbContext context, IMapper map)
+        public FanFicService(IUnitOfWork uow, IMapper map) : base(uow, map)        
         {
-            UnitOfWork = new UnitOfWork(context);
-            Mapper = map;
+
         }
 
         public IEnumerable<FanFicDTO> GetFanFics()

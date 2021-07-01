@@ -4,8 +4,6 @@ using DataAccess.GenericRepository;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataAccess.UnitOfWork
 {
@@ -13,24 +11,40 @@ namespace DataAccess.UnitOfWork
     {
         private readonly AppDbContext _context;
 
-        public UnitOfWork(AppDbContext context)
+        public UnitOfWork(
+            AppDbContext context,
+            ICapabilityRepository capabilityRepository,
+            ICommentRepository commentRepository,
+            IFanFicRepository fanFicRepository,
+            ILikeRepository likeRepository,
+            ITopicRepository topicRepository,
+            IUserRepository userRepository,
+            IUserCapabilityRepository userCapabilityRepository
+            )
         {
             _context = context;
+            Capability = capabilityRepository;
+            Comment = commentRepository;
+            FanFic = fanFicRepository;
+            Like = likeRepository;
+            Topic = topicRepository;
+            User = userRepository;
+            UserCapability = userCapabilityRepository;
         }
 
-        public IGenericRepository<Capability> Capability => new CapabilityRepository(_context);
+        public ICapabilityRepository Capability { get; set; }
 
-        public IGenericRepository<Comment> Comment => new CommentRepository(_context);
+        public ICommentRepository Comment { get; set; }
 
-        public IGenericRepository<FanFic> FanFic => new FanFicRepository(_context);
+        public IFanFicRepository FanFic { get; set; }
 
-        public IGenericRepository<Like> Like => new LikeRepository(_context);
+        public ILikeRepository Like { get; set; }
 
-        public IGenericRepository<Topic> Topic => new TopicRepository(_context);
+        public ITopicRepository Topic { get; set; }
 
-        public IGenericRepository<User> User => new UserRepository(_context);
+        public IUserRepository User { get; set; }
 
-        public IGenericRepository<UserCapability> UserCapability => new UserCapabilityRepository(_context);
+        public IUserCapabilityRepository UserCapability { get; set; }
 
         public void Save()
         {
